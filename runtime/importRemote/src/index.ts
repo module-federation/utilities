@@ -17,7 +17,6 @@ const loadRemote = (
 ) =>
   new Promise<void>((resolve, reject) => {
     const timestamp = bustRemoteEntryCache ? `?t=${new Date().getTime()}` : "";
-
     __webpack_require__.l(
       `${url}${timestamp}`,
       (event) => {
@@ -35,7 +34,13 @@ const loadRemote = (
     );
   });
 
-/* 
+const initSharing = async () => {
+  if (!__webpack_share_scopes__?.default) {
+    await __webpack_init_sharing__("default");
+  }
+};
+
+/*
   Dynamically import a remote module using Webpack's loading mechanism:
   https://webpack.js.org/concepts/module-federation/
 */
@@ -52,7 +57,7 @@ export const importRemote = async <T>({
       await loadRemote(`${url}/${remoteEntryFileName}`, scope, bustRemoteEntryCache);
       if (!window[scope]) {
         throw new Error(
-          `Remote loaded succesfully but ${scope} could not be found! Verify that the name is correct in the Webpack configuration!`,
+          `Remote loaded successfully but ${scope} could not be found! Verify that the name is correct in the Webpack configuration!`,
         );
       }
       // Initializes the share scope. This fills it with known provided modules from this build and all remotes
