@@ -40,6 +40,18 @@ const initSharing = async () => {
   }
 };
 
+const initContainer = async (containerScope) => {
+  try {
+    if (!containerScope.__initialized) {
+      await containerScope.init(__webpack_share_scopes__.default);
+      containerScope.__initialized = true;
+    }
+  } catch (error) {
+    // If the container throws an error, it is probably because it is not a container.
+    // In that case, we can just ignore it.
+  }
+};
+
 /*
   Dynamically import a remote module using Webpack's loading mechanism:
   https://webpack.js.org/concepts/module-federation/
@@ -53,23 +65,20 @@ export const importRemote = async <T>({
 }: ImportRemoteOptions): Promise<T> => {
   if (!window[scope]) {
     try {
-      // Load the remote:
-      await loadRemote(`${url}/${remoteEntryFileName}`, scope, bustRemoteEntryCache);
+      // Load the remote and initialize the share scope if it's empty
+      await Promise.all([loadRemote(`${url}/${remoteEntryFileName}`, scope, bustRemoteEntryCache), initSharing()]);
       if (!window[scope]) {
         throw new Error(
           `Remote loaded successfully but ${scope} could not be found! Verify that the name is correct in the Webpack configuration!`,
         );
       }
-      // Initializes the share scope. This fills it with known provided modules from this build and all remotes
-      await __webpack_init_sharing__("default");
-      // Initialize the container, it may provide shared modules:
-      await window[scope].init(__webpack_share_scopes__.default);
+      // Initialize the container, it may provide shared modules
+      await initContainer(window[scope]);
     } catch (error) {
-      // Rethrow the error in case the user wants to handle it:
+      // Rethrow the error in case the user wants to handle it
       throw error;
     }
   }
-
   const moduleFactory = await window[scope].get(module.startsWith("./") ? module : `./${module}`);
   return moduleFactory();
 };
