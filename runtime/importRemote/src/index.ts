@@ -38,7 +38,7 @@ const initSharing = async () => {
   }
 };
 
-const initContainer = async (containerScope) => {
+const initContainer = async (containerScope: any) => {
   try {
     if (!containerScope.__initialized && !containerScope.__initializing) {
       containerScope.__initializing = true;
