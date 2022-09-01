@@ -40,9 +40,11 @@ const initSharing = async () => {
 
 const initContainer = async (containerScope) => {
   try {
-    if (!containerScope.__initialized) {
+    if (!containerScope.__initialized && !containerScope.__initializing) {
+      containerScope.__initializing = true;
       await containerScope.init(__webpack_share_scopes__.default);
       containerScope.__initialized = true;
+      delete containerScope.__initializing;
     }
   } catch (error) {
     // If the container throws an error, it is probably because it is not a container.
