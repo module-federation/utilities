@@ -25,7 +25,7 @@
   "bugs": {
     "url": "https://github.com/module-federation/utilities/issues"
   },
-  "homepage": "https://github.com/module-federation/utilities/runtime/importRemote",
+  "homepage": "https://github.com/module-federation/utilities/runtime/importRemote#readme",
   "files": [
     "dist"
   ],
