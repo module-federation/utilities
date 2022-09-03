@@ -7,10 +7,21 @@ const extensions = [".js", ".ts", ".tsx", ".json"];
 
 const config = {
   input: "src/index.ts",
-  output: {
-    file: "dist/index.min.js",
-    format: "esm",
-  },
+  output: [
+    {
+      dir: "dist/esm",
+      format: "esm",
+      preserveModules: true,
+      sourcemap: true,
+    },
+    {
+      dir: "dist/cjs",
+      format: "cjs",
+      preserveModules: true,
+      exports: "auto",
+      sourcemap: true,
+    },
+  ],
   plugins: [
     resolve({ extensions }),
     commonjs(),
