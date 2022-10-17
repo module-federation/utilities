@@ -10,7 +10,7 @@ This library allows you to completely isolate the CSS of your microfrontend appl
 
 > **Warning**
 >
-> This library is intened for use inside an embedded microfrontend application. It is not intended to be used the host (a.k.a. shell) application.
+> This library is intened for use inside an embedded microfrontend application. It is not intended to be used in the host (a.k.a. shell) application.
 
 In order for the CSS imports to work properly inside the microfrontend application first you need to pass the `insert` function from the library to the `style-loader` options in the Webpack configuration:
 
@@ -43,7 +43,7 @@ module.exports = {
 
 **Then you have two options:**
 
-### 1. If you use React the simplest way is to use the `CssBoundary` component at the root of your application:**
+### 1. If you use React the simplest way is to use the `CssBoundary` component at the root of your application:
 
 ```jsx
 // App.jsx
@@ -60,7 +60,7 @@ const App = () => (
 >
 > Use React version 17 or higher in the microfrontend application. Lower versions of React do not re-render properly when inside a shadow DOM.
 
-### 2. If you don't use React or you wish to have more fine control you can use the `createShadowInstance` and `deleteShadowInstance` functions:**
+### 2. If you don't use React or you wish to have more fine control you can use the `createShadowInstance` and `deleteShadowInstance` functions:
 
 ```js
 // SomeComponent.js
