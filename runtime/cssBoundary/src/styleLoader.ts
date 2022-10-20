@@ -17,15 +17,8 @@ export const createShadowInstance = function (parentElementId: string) {
     throw error;
   }
   shadowContainer.shadowRoot.append(...styles.map((style) => style.cloneNode(true)));
-  // Create a body element so that reboot CSS rules work in the shadow DOM
-  const body = document.createElement("body");
-  // Create a placeholder for the React app
-  const appPlaceholder = document.createElement("div");
-  appPlaceholder.id = "app-placeholder";
-  body.appendChild(appPlaceholder);
-  shadowContainer.shadowRoot.appendChild(body);
   instances[parentElementId] = shadowContainer;
-  return appPlaceholder;
+  return shadowContainer.shadowRoot;
 };
 
 export const deleteShadowInstance = function (id: string) {
