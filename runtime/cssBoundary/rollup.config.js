@@ -7,6 +7,7 @@ const extensions = [".js", ".ts", ".tsx", ".json"];
 
 const config = {
   input: "src/index.ts",
+  external: [/@babel\/runtime/, "react", "react-dom"],
   output: [
     {
       dir: "dist/",
@@ -24,6 +25,7 @@ const config = {
       exclude: "**/node_modules/**",
       babelHelpers: "runtime",
       extensions,
+      presets: ["@babel/preset-react"],
     }),
     terser(),
   ],
