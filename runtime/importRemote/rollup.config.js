@@ -7,6 +7,7 @@ const extensions = [".js", ".ts", ".tsx", ".json"];
 
 const config = {
   input: "src/index.ts",
+  external: [/@babel\/runtime/],
   output: [
     {
       dir: "dist/esm",
