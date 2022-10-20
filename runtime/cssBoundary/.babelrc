@@ -8,7 +8,8 @@
         "useBuiltIns": "entry",
         "targets": "> 0.25%, not dead"
       }
-    ]
+    ],
+    "@babel/preset-react"
   ],
-  "plugins": [["@babel/plugin-transform-runtime", { "useESModules": true }]]
+  "plugins": [["@babel/plugin-transform-runtime", { "useESModules": false }]]
 }

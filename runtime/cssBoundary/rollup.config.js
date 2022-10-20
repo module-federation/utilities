@@ -25,7 +25,6 @@ const config = {
       exclude: "**/node_modules/**",
       babelHelpers: "runtime",
       extensions,
-      presets: ["@babel/preset-react"],
     }),
     terser(),
   ],
