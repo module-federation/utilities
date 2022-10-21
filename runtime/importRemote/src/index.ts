@@ -47,8 +47,7 @@ const initContainer = async (containerScope: any) => {
       delete containerScope.__initializing;
     }
   } catch (error) {
-    // If the container throws an error, it is probably because it is not a container.
-    // In that case, we can just ignore it.
+    console.error(error);
   }
 };
 
