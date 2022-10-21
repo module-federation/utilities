@@ -1,9 +1,9 @@
 {
   "name": "module-federation-import-remote",
-  "version": "1.0.12",
+  "version": "1.0.14",
   "description": "Allow Dynamic Imports of Remotely Exposed Modules Using Webpack Module Federation",
-  "module": "dist/esm/src/index.js",
-  "main": "dist/cjs/src/index.js",
+  "module": "dist/esm/index.js",
+  "main": "dist/cjs/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rimraf dist && tsc && rollup -c"
