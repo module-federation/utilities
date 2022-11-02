@@ -38,6 +38,7 @@ const initSharing = async () => {
   }
 };
 
+// __initialized and __initializing flags prevent some concurrent re-initialization corner cases
 const initContainer = async (containerScope: any) => {
   try {
     if (!containerScope.__initialized && !containerScope.__initializing) {
