@@ -38,6 +38,7 @@ const initSharing = async () => {
   }
 };
 
+// __initialized and __initializing flags prevent some concurrent re-initialization corner cases
 const initContainer = async (containerScope: any) => {
   try {
     if (!containerScope.__initialized && !containerScope.__initializing) {
@@ -63,24 +64,19 @@ export const importRemote = async <T>({
   bustRemoteEntryCache = true,
 }: ImportRemoteOptions): Promise<T> => {
   if (!window[scope]) {
-    try {
-      // Load the remote and initialize the share scope if it's empty
-      await Promise.all([loadRemote(`${url}/${remoteEntryFileName}`, scope, bustRemoteEntryCache), initSharing()]);
-      if (!window[scope]) {
-        throw new Error(
-          `Remote loaded successfully but ${scope} could not be found! Verify that the name is correct in the Webpack configuration!`,
-        );
-      }
-      // Initialize the container to get shared modules and get the module factory:
-      const [, moduleFactory] = await Promise.all([
-        initContainer(window[scope]),
-        window[scope].get(module.startsWith("./") ? module : `./${module}`),
-      ]);
-      return moduleFactory();
-    } catch (error) {
-      // Rethrow the error in case the user wants to handle it
-      throw error;
+    // Load the remote and initialize the share scope if it's empty
+    await Promise.all([loadRemote(`${url}/${remoteEntryFileName}`, scope, bustRemoteEntryCache), initSharing()]);
+    if (!window[scope]) {
+      throw new Error(
+        `Remote loaded successfully but ${scope} could not be found! Verify that the name is correct in the Webpack configuration!`,
+      );
     }
+    // Initialize the container to get shared modules and get the module factory:
+    const [, moduleFactory] = await Promise.all([
+      initContainer(window[scope]),
+      window[scope].get(module.startsWith("./") ? module : `./${module}`),
+    ]);
+    return moduleFactory();
   } else {
     const moduleFactory = await window[scope].get(module.startsWith("./") ? module : `./${module}`);
     return moduleFactory();
