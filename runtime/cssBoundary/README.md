@@ -1,4 +1,4 @@
-# Module Federation CSS Boundary
+# Microfrontend CSS Boundary
 
 Block outside CSS from affecting your microfrontend application.
 
@@ -16,7 +16,7 @@ In order for the CSS imports to work properly inside the microfrontend applicati
 
 ```js
 // webpack.config.js
-const { insert } = require('@module-federation/css-boundary');
+const { insert } = require('css-boundary');
 
 module.exports = {
   // ...
@@ -47,7 +47,7 @@ module.exports = {
 
 ```jsx
 // App.jsx
-import { CssBoundary } from '@module-federation/css-boundary';
+import { CssBoundary } from 'css-boundary';
 
 const App = () => (
   <CssBoundary>
@@ -64,7 +64,7 @@ const App = () => (
 
 ```js
 // SomeComponent.js
-import { createShadowInstance, deleteShadowInstance } from '@module-federation/css-boundary';
+import { createShadowInstance, deleteShadowInstance } from 'css-boundary';
 
 // After mount:
 const parentElement = document.getElementById('some-element');
@@ -78,5 +78,3 @@ deleteShadowInstance(parentElement); // parentElement is the HTMLElement where t
 ```
 
 Both ways will render the microfronend application inside a shadow DOM attached to the app injection HTML element. Any global or local CSS used anywhere in the embedded application will be placed inside the shadowRoot and will not affect or be affected by the host application.
-
-For a working example follow the link [css-isolation](https://github.com/module-federation/module-federation-examples/tree/master/css-isolation).
